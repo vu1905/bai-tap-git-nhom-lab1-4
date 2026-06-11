@@ -1,0 +1,26 @@
+name: Python Code Quality Check (CI)
+
+# Kích hoạt pipeline này khi có Push hoặc Pull Request gửi vào nhánh main
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # Thuê một máy chủ Linux ảo miễn phí của GitHub để chạy test
+
+    steps:
+
+    - name: Lấy code mới nhất từ kho về máy ảo
+      uses: actions/checkout@v3
+
+    - name: Cài đặt phiên bản Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Tự động chạy bộ kiểm thử Unit Test
+      run: |
+        python -m unittest test_main.py
